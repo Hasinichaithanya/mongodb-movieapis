@@ -3,7 +3,7 @@ const mongodb = require("mongodb");
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
 const uri =
-  "mongodb+srv://hasinichaithanya04:70wYPVBwal3dRRTK@cluster0.suc7fzf.mongodb.net/movies?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://hasinichaithanya04:@cluster0.suc7fzf.mongodb.net/dbname?retryWrites=true&w=majority&appName=Cluster0";
 const app = express();
 let db;
 app.use(express.json());
