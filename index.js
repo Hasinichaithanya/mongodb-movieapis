@@ -26,12 +26,10 @@ client
         .find({})
         .toArray()
         .then((moviesList) =>
-          res.json({
-            moviesList,
-          })
+          res.json({ message: "Data is successfully fetched", moviesList })
         )
         .catch((e) => {
-          res.json(e);
+          res.send("Error fetching the data:", e.message);
           console.log(err);
         });
     });
@@ -43,13 +41,13 @@ client
         .insertOne(movie)
         .then((movie) =>
           res.json({
+            message: "Movie is added successfully",
             movie,
             success: true,
-            message: "Movie is added successfully",
           })
         )
         .catch((e) => {
-          res.json(e);
+          res.json("Error: ", e);
           console.log(err);
         });
     });
@@ -66,11 +64,12 @@ client
         .findOne({ _id: new mongodb.ObjectId(id) })
         .then((movie) =>
           res.json({
+            message: "Movie is fetched successfully",
             movie,
           })
         )
         .catch((e) => {
-          res.json(e);
+          res.send("Error: ", e);
           console.log(err);
         });
     });
@@ -81,8 +80,8 @@ client
       const size = parseInt(req.query.size);
       if (page <= 0) {
         return res.status(400).json({
-          success: false,
           message: "Invalid page size, page size must be greater than 0",
+          success: false,
         });
       }
       movies
@@ -91,10 +90,10 @@ client
         .limit(size)
         .toArray()
         .then((result) => {
-          res.json(result);
+          res.json({ message: "Fetched successfully", result });
         })
         .catch((e) => {
-          res.json(e.message);
+          res.json("Error: ", e.message);
         });
     });
 
@@ -109,10 +108,14 @@ client
       movies
         .deleteOne({ _id: new mongodb.ObjectId(id) })
         .then((response) => {
-          res.json({ success: true, data: "Movie is deleted successfully" });
+          res.json({
+            success: true,
+            message: "Movie is deleted successfully",
+            response,
+          });
         })
         .catch((e) => {
-          res.send(e);
+          res.send("Error: ", e);
           console.log(e);
         });
     });
